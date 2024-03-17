@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosService from "../utils/ApiService";
 import { ToastContainer, toast } from "react-toastify";
+import { Checkbox } from "./Checkbox ";
 
 function AddEditEmployee() {
   let params = useParams();
@@ -57,7 +58,7 @@ function AddEditEmployee() {
         if (res?.data?.warnMessasge) {
           toast.error(res?.data?.warnMessasge);
         } else {
-          uploadImage(res?.result?._id);
+          uploadImage(res?.data?.result?._id);
         }
       }
     } catch (error) {
@@ -125,7 +126,14 @@ function AddEditEmployee() {
             console.log("use Effect isAddMode=====> ");
             // get user and set form fields
             AxiosService.get(`/emp/${params.id}`).then((res) => {
-              const fields = ["userName", "email", "mobile", "designation"];
+              const fields = [
+                "userName",
+                "email",
+                "mobile",
+                "designation",
+                "gender",
+                "course",
+              ];
               fields.forEach((field) =>
                 setFieldValue(field, res?.data?.emp?.[field], false)
               );
